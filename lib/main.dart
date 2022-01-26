@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,30 +22,67 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class DicePage extends StatelessWidget {
+class DicePage extends StatefulWidget {
+  const DicePage({Key key}) : super(key: key);
+
+  @override
+  _DicePageState createState() => _DicePageState();
+}
+
+class _DicePageState extends State<DicePage> {
+  int _leftDiceNumber = 1;
+  int _rightDiceNumber = 1;
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Row(
-        children: [
-          Expanded(
-            child: TextButton(
-              onPressed: () {
-                print("Oi");
-              },
-              child: Image.asset('images/dice1.png'),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    _leftDiceNumber = Random().nextInt(6) + 1;
+                  });
+                },
+                child: Image.asset('images/dice$_leftDiceNumber.png'),
+              ),
             ),
-          ),
-          Expanded(
-            child: TextButton(
-              onPressed: () {
-                print("Oi2");
-              },
-              child: Image.asset('images/dice1.png'),
+            Expanded(
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    _rightDiceNumber = Random().nextInt(6) + 1;
+                  });
+                },
+                child: Image.asset('images/dice$_rightDiceNumber.png'),
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+        SizedBox(
+          height: 16.0,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  _leftDiceNumber = Random().nextInt(6) + 1;
+                  _rightDiceNumber = Random().nextInt(6) + 1;
+                });
+              },
+              child: Text(
+                "Roll the dices!",
+                style: TextStyle(fontSize: 20.0),
+              ),
+            )
+          ],
+        )
+      ],
     );
   }
 }
